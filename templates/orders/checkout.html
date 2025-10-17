@@ -1,0 +1,39 @@
+{% extends "shop/base.html" %}
+{% load cart_extras %}
+{% block content %}
+<h2>Checkout</h2>
+
+{% if cart_items %}
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+      <tr>
+        <td>{{ item.product.title }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>₹{{ item.product.price }}</td>
+        <td>₹{{ item.product.price|multiply:item.quantity }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Total: ₹{{ total }}</h3>
+
+  <form method="post" action="{% url 'checkout' %}">
+    {% csrf_token %}
+    <button type="submit">Place Order</button>
+  </form>
+
+{% else %}
+  <p>Your cart is empty. <a href="{% url 'shop_home' %}">Continue Shopping</a></p>
+{% endif %}
+
+{% endblock %}

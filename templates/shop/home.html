@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div style="display: flex; gap: 20px;">
+
+    <!-- Sidebar with Categories -->
+    <div style="width: 220px; border-right: 1px solid #ddd; padding-right: 15px;">
+        <h3>Categories</h3>
+        <ul style="list-style: none; padding: 0;">
+            {% for cat in categories %}
+                <li style="margin-bottom: 8px;">
+                    <a href="{% url 'category_view' cat.slug %}" style="text-decoration: none; color: #2874f0;">
+                        {{ cat.name }}
+                    </a>
+                </li>
+            {% empty %}
+                <li>No categories available</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Main Content: All Products -->
+    <div style="flex-grow: 1;">
+        <h2>All Products</h2>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            {% for p in products %}
+            <div style="border: 1px solid #ccc; padding: 15px; width: 220px; text-align: center; border-radius: 8px; box-shadow: 0px 2px 5px rgba(0,0,0,0.1);">
+                
+                <!-- Product Image -->
+                {% if p.image %}
+                    <img src="{{ p.image.url }}" alt="{{ p.title }}" width="200" height="200" style="object-fit: contain; margin-bottom: 10px;">
+                {% else %}
+                    <img src="{% static 'images/no_image.png' %}" alt="No Image" width="200" height="200" style="object-fit: contain; margin-bottom: 10px;">
+                {% endif %}
+
+                <!-- Product Title -->
+                <h4>
+                    <a href="{% url 'product_detail' p.slug %}" style="text-decoration: none; color: #333;">
+                        {{ p.title }}
+                    </a>
+                </h4>
+
+                <!-- Price -->
+                <p style="font-weight: bold; color: green;">₹{{ p.price }}</p>
+
+                <!-- Add to Cart -->
+                <a href="/cart/add/{{ p.id }}/" style="background: #2874f0; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none;">
+                    Add to Cart
+                </a>
+            </div>
+            {% empty %}
+                <p>No products available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

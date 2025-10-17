@@ -1,0 +1,18 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<h2>Order Placed Successfully 🎉</h2>
+<p>Your order #{{ order.id }} has been placed.</p>
+
+<h3>Order Summary:</h3>
+<ul>
+  {% for item in order.items.all %}
+    <li>{{ item.product.title }} — {{ item.quantity }} × ₹{{ item.product.price }}</li>
+  {% empty %}
+    <li>No items in this order.</li>
+  {% endfor %}
+</ul>
+
+<h3>Total Paid: ₹{{ order.total }}</h3>
+
+<p><a href="{% url 'myorders' %}">View My Orders</a></p>
+{% endblock %}

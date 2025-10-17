@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Your Cart</h2>
+<ul>
+  {% for it in items %}
+    <li>{{it.product.title}} x {{it.quantity}} - ₹{{it.product.price}} <a href="/cart/remove/{{it.id}}/">Remove</a></li>
+  {% endfor %}
+</ul>
+<p>Total: ₹{{total}}</p>
+<p><a href="/orders/checkout/">Checkout</a></p>
+
+{% endblock %}

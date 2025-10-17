@@ -1,0 +1,11 @@
+    # Virtual environment
+    venv/
+    .env/
+
+    # Database
+    *.sqlite3
+
+    # Django specific
+    *.pyc
+    __pycache__/
+    media/ # if you don't want to track uploaded media files
